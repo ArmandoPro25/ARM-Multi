@@ -4,18 +4,41 @@ using Photon.Pun;
 public class ReviveSystem : MonoBehaviourPun
 {
     public float reviveDistance = 3f;
+    public float timeWait = 3f;
+
+    private float total = 0f;
 
     void Update()
     {
         if (!photonView.IsMine) return;
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKey(KeyCode.E)) // 🔥 CAMBIO IMPORTANTE
         {
-            TryRevive();
+            PlayerHealth target = GetDownedPlayerNearby();
+
+            if (target != null)
+            {
+                total += Time.deltaTime;
+
+                if (total >= timeWait)
+                {
+                    Debug.Log("Reviviendo...");
+                    target.photonView.RPC("SyncDownState", RpcTarget.All, false);
+                    total = 0f;
+                }
+            }
+            else
+            {
+                total = 0f;
+            }
+        }
+        else
+        {
+            total = 0f;
         }
     }
 
-    void TryRevive()
+    PlayerHealth GetDownedPlayerNearby()
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, reviveDistance);
 
@@ -27,9 +50,15 @@ public class ReviveSystem : MonoBehaviourPun
                 health.isDowned &&
                 health.photonView != photonView)
             {
-                health.photonView.RPC("SyncDownState", RpcTarget.All, false);
-                break;
+                return health;
             }
         }
+        return null;
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, reviveDistance);
     }
 }
