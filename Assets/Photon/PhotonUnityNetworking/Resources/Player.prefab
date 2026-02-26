@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 3359744002533953307}
   - component: {fileID: 7711576545838378492}
   - component: {fileID: 1262914570914067682}
+  - component: {fileID: 5511085108672271188}
+  - component: {fileID: 5193653148858637910}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -144,6 +146,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkSmoother
   smoothSpeed: 20
+--- !u!114 &5511085108672271188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 236093372426245137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1f4bf52c9498f641ab7af438f0702a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  maxHealth: 100
+  isDowned: 0
+  playerModel: {fileID: 2995268147703133890}
+--- !u!114 &5193653148858637910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 236093372426245137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dec23f4f8b7f434686f49a9a61b3171, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReviveSystem
+  reviveDistance: 3
 --- !u!1 &1344589093615293488
 GameObject:
   m_ObjectHideFlags: 0

@@ -33,6 +33,13 @@ public class PlayerMovementFP : MonoBehaviourPunCallbacks
         {
             jumpRequest = true;
         }
+
+        if (photonView.IsMine && Input.GetKeyDown(KeyCode.K))
+        {
+            PlayerHealth health = GetComponent<PlayerHealth>();
+            health.photonView.RPC("TakeDamage", RpcTarget.All, 100);
+            Debug.Log("Estas derrotado");
+        }
     }
 
     void FixedUpdate()
