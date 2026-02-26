@@ -10,26 +10,25 @@ public class NetworkSmoother : MonoBehaviourPun, IPunObservable
 
     void Update()
     {
-        if (!photonView.IsMine)
-        {
-            transform.position = Vector3.Lerp(
-                transform.position,
-                networkPosition,
-                Time.deltaTime * smoothSpeed);
+        if (photonView.IsMine) return;
 
-            transform.rotation = Quaternion.Lerp(
-                transform.rotation,
-                networkRotation,
-                Time.deltaTime * smoothSpeed);
-        }
+        transform.localPosition = Vector3.Lerp(
+            transform.localPosition,
+            networkPosition,
+            Time.deltaTime * smoothSpeed);
+
+        transform.localRotation = Quaternion.Lerp(
+            transform.localRotation,
+            networkRotation,
+            Time.deltaTime * smoothSpeed);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(transform.position);
-            stream.SendNext(transform.rotation);
+            stream.SendNext(transform.localPosition);
+            stream.SendNext(transform.localRotation);
         }
         else
         {

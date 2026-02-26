@@ -3,7 +3,7 @@ using Photon.Pun;
 
 public class Launcher : MonoBehaviourPunCallbacks
 {
-    public PhotonView playerPrefab;
+    public GameObject playerPrefab;
     public Transform spawnPoint;
     void Start()
     {
