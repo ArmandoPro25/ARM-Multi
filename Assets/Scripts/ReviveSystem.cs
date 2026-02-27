@@ -12,7 +12,7 @@ public class ReviveSystem : MonoBehaviourPun
     {
         if (!photonView.IsMine) return;
 
-        if (Input.GetKey(KeyCode.E)) // 🔥 CAMBIO IMPORTANTE
+        if (Input.GetKey(KeyCode.E))
         {
             PlayerHealth target = GetDownedPlayerNearby();
 

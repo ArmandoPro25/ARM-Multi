@@ -11,6 +11,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     public Transform playerModel;
     public GameObject firstPersonCamera;
     public GameObject thirdPersonCamera;
+    public float downedSpeed = 1f;
 
     void Start()
     {
@@ -37,7 +38,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
 
         if (photonView.IsMine)
         {
-            movement.speed = 1f;
+            float targetSpeed = downedSpeed;
+            movement.speedMultiplier = targetSpeed / movement.walkSpeed;
         }
 
         photonView.RPC("SyncDownState", RpcTarget.All, true);
@@ -52,13 +54,15 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         {
             if (photonView.IsMine)
             {
-                movement.speed = 1f;
+                // Ajustar multiplicador
+                movement.speedMultiplier = downedSpeed / movement.walkSpeed;
+
                 // Cambiar cámaras
                 firstPersonCamera.SetActive(false);
                 thirdPersonCamera.SetActive(true);
             }
 
-            // Acostar el modelo del jugador (Cambiar por animación después)
+            // Acostar el modelo
             playerModel.localRotation = Quaternion.Euler(90f, 0f, 0f);
         }
         else
@@ -67,13 +71,15 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
 
             if (photonView.IsMine)
             {
-                movement.speed = 6f;
+                // Restaurar multiplicador
+                movement.speedMultiplier = 1f;
+
                 // Cambiar cámaras
                 firstPersonCamera.SetActive(true);
-                thirdPersonCamera.SetActive(true);
+                thirdPersonCamera.SetActive(false);
             }
 
-            // Levantar el modelo del jugador (Cambiar por animación después)
+            // Levantar el modelo
             playerModel.localRotation = Quaternion.Euler(0f, 0f, 0f);
         }
     }
